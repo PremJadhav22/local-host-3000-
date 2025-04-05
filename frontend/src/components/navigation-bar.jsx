@@ -72,7 +72,7 @@ export default function NavigationBar() {
                                 <Button
                                     variant="ghost"
                                     size="icon"
-                                    className="text-slate-500 hover:text-red-500"
+                                    className="text-slate-500 hover:text-red-500 cursor-pointer"
                                     onClick={disconnectWallet}
                                     aria-label="Disconnect wallet"
                                 >
@@ -80,7 +80,7 @@ export default function NavigationBar() {
                                 </Button>
                             </div>
                         ) : (
-                            <Button onClick={connectWallet} className="ml-4 bg-blue-500 hover:bg-blue-600 rounded-2xl">
+                            <Button onClick={connectWallet} className="ml-4 bg-blue-500 hover:bg-blue-600 rounded-2xl cursor-pointer">
                                 <Wallet className="h-4 w-4 mr-2" />
                                 Connect Wallet
                             </Button>
@@ -185,7 +185,7 @@ function NavLink({
             href={href}
             className={cn(
                 "flex items-center px-4 py-2 rounded-2xl transition-colors",
-                isActive ? "bg-lavender-100 text-lavender-700" : "text-slate-600 hover:bg-lavender-50 hover:text-lavender-600",
+                isActive ? "bg-black" : "text-slate-600 hover:bg-lavender-50 hover:text-lavender-600",
             )}
         >
             {icon}

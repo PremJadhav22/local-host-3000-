@@ -23,9 +23,10 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <div className="flex min-h-screen flex-col">
             <NavigationBar />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 bg-white">{children}</main>
           </div>
         </ThemeProvider>
+        <Footer />
       </body>
     </html>
   )
@@ -34,3 +35,4 @@ export default function RootLayout({
 
 
 import './globals.css'
+import Footer from "@/components/footer"
