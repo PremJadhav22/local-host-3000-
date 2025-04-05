@@ -6,19 +6,38 @@ import { Button } from "@/components/ui/button"
 import { Menu, X, Home, PenSquare, BarChart2, Lightbulb, Users, LogOut, Wallet } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { usePathname } from "next/navigation"
+import { ethers } from 'ethers'
+let provider;
+if (typeof window !== 'undefined') {
+    provider = new ethers.BrowserProvider(window.ethereum);
+}
+
+
+
+
 
 export default function NavigationBar() {
     const [isOpen, setIsOpen] = useState(false)
     const [isConnected, setIsConnected] = useState(false)
-    const walletAddress = "0x1234...5678"
+    const [walletAddress, setWalletAddress] = useState("")
+
     const pathname = usePathname()
 
     const toggleMenu = () => {
         setIsOpen(!isOpen)
     }
 
-    const connectWallet = () => {
-        setIsConnected(true)
+    const connectWallet = async () => {
+        try {
+            await provider.send("eth_requestAccounts", []);
+            const signer = await provider.getSigner();
+            const address = await signer.getAddress();
+            setWalletAddress(address)
+            console.log(signer, address)
+            setIsConnected(true)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const disconnectWallet = () => {
@@ -67,7 +86,7 @@ export default function NavigationBar() {
                             <div className="flex items-center ml-4">
                                 <Button variant="outline" className="rounded-2xl border-lavender-200 text-white mr-2">
                                     <Wallet className="h-4 w-4 mr-2" />
-                                    {walletAddress}
+                                    {walletAddress.slice(0, 6) + "..." + walletAddress.slice(-4)}
                                 </Button>
                                 <Button
                                     variant="ghost"
@@ -90,7 +109,7 @@ export default function NavigationBar() {
                     {/* Mobile menu button */}
                     <div className="md:hidden">
                         <Button variant="default" size="icon" onClick={toggleMenu} aria-label="Toggle menu">
-                            {isOpen ? <p className="text-black visible">Close</p>: <Menu className="h-6 w-6 stroke-black" />}
+                            {isOpen ? <p className="text-black visible">Close</p> : <Menu className="h-6 w-6 stroke-black" />}
                         </Button>
                     </div>
                 </div>
